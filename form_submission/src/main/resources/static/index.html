@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฟอร์มขอเพิ่ม/ถอนรายวิชา</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<form action="/register" method="post" id="display">
+    <div class="form-header">
+        <img src="logotu.png" alt="Your Logo">
+    </div>
+
+    <h2>แบบฟอร์มขอเพิ่ม/ถอนรายวิชา</h2>
+    <div class="date">
+        <label for="date"></label>
+        <input type="date" name="date" id="date"  required>
+    </div>
+
+    <div class="pdata">
+
+        <label for="prefix">คำนำหน้า</label>
+        <select name="prefix" id="prefix"  required>
+            <option value="1">นาย</option>
+            <option value="2">นางสาว</option>
+        </select>
+
+        <label for="firstName">ชื่อ</label>
+        <input type="text" name="firstName" id="firstName" required>
+
+        <label for="lastName">นามสกุล</label>
+        <input type="text" name="lastName" id="lastName" required>
+
+
+
+    </div>
+
+    <div class="pdata">
+        <label for="SID">เลขทะเบียน</label>
+        <input type="number" name="SID" id="SID" required>
+
+        <label for="Year">ชั้นปี</label>
+        <select id="Year" name="Year" required>
+            <option value="1">ปี 1</option>
+            <option value="2">ปี 2</option>
+            <option value="3">ปี 3</option>
+            <option value="4">ปี 4</option>
+            <option value="5">ปี 5</option>
+            <option value="6">ปี 6</option>
+        </select>
+
+        <label for="field">สาขาวิชา</label>
+        <input type="text" name="field" id="field" required>
+    </div>
+    <div class="pdata">
+
+        <label for="addressNumber">บ้านเลขที่</label>
+        <input type="text" name="addressNumber" id="addressNumber" required>
+
+        <label for="moo">หมู่</label>
+        <input type="text" name="moo" id="moo" required>
+
+        <label for="tambol">ตำบล</label>
+        <input type="text" name="tambol" id="tambol" required>
+
+    </div>
+
+    <div class="pdata">
+
+        <label for="amphoe">อำเภอ</label>
+        <input type="text" name="amphoe" id="amphoe" required>
+
+        <label for="province">จังหวัด</label>
+        <input type="text" name="province" id="province" required>
+
+        <label for="postcode">รหัสไปรษณีย์</label>
+        <input type="text" name="postcode" id="postcode" required>
+
+    </div>
+
+    <div class="pdata">
+
+        <label for="phone">เบอร์โทรศัพท์มือถือ</label>
+        <input type="tel" name="phone" id="phone" required>
+
+        <label for="telephone">เบอร์โทรศัพท์บ้าน</label>
+        <input type="tel" name="telephone" id="telephone" required>
+    </div>
+
+    <div class="pdata">
+        <label for="advisor">อาจารย์ที่ปรึกษา</label>
+        <input type="text" name="advisor" id="advisor" required>
+    </div>
+
+    <div class="pdata">
+        <label for="add_amount">จำนวนวิชาที่ต้องการเพิ่ม</label>
+        <input type="text" name="add_amount" id="add_amount">
+
+        <label for="drop_amount">จำนวนวิชาที่ต้องการถอน</label>
+        <input type="text" name="drop_amount" id="drop_amount">
+    </div>
+
+    <h3>รายละเอียดวิชาที่ต้องการเพิ่ม (สูงสุด 10 รายวิชา)</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>รหัสวิชา</th>
+            <th>ชื่อวิชา</th>
+            <th>Section</th>
+            <th>วัน/เวลาที่สอน</th>
+            <th>หน่วยกิต</th>
+            <th>ชื่อผู้สอน</th>
+        </tr>
+        </thead>
+        <tbody id="add_courses">
+        </tbody>
+    </table>
+
+    <h3>รายละเอียดวิชาที่ต้องการถอน (สูงสุด 10 รายวิชา)</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>รหัสวิชา</th>
+            <th>ชื่อวิชา</th>
+            <th>Section</th>
+            <th>วัน/เวลาที่สอน</th>
+            <th>หน่วยกิต</th>
+            <th>ชื่อผู้สอน</th>
+        </tr>
+        </thead>
+        <tbody id="drop_courses">
+        </tbody>
+    </table>
+
+    <label for="cause">เหตุผลที่ร้องขอ</label>
+    <textarea name="cause" id="cause" rows="4" required></textarea>
+
+    <button type="submit">ส่ง</button>
+</form>
+
+<script>
+        function addCourseRow(tableId, count) {
+            const table = document.getElementById(tableId);
+            while (table.rows.length < count) {
+                const row = table.insertRow(-1);
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+                const cell5 = row.insertCell(4);
+                const cell6 = row.insertCell(5);
+            
+                cell1.innerHTML = '<input type="text" name="subjectCode" id="subjectCode" required>';
+                cell2.innerHTML = '<input type="text" name="subjectName" id="subjectName" required>';
+                cell3.innerHTML = '<input type="text" name="subjectSection" id="subjectSection" required>';
+                cell4.innerHTML = '<input type="text" name="subjectSchedule" id="subjectSchedule" required>';
+                cell5.innerHTML = '<input type="number" name="subjectCredits" id="subjectCredits" required>';
+                cell6.innerHTML = '<input type="text" name="subjectInstructor" id="subjectInstructor" required>';
+            }
+        }
+
+        function removeCourseRow(tableId, count) {
+            const table = document.getElementById(tableId);
+            while (table.rows.length > count) {
+                table.deleteRow(-1);
+            }
+        }
+
+        document.getElementById("add_amount").addEventListener("input", function () {
+            let count = parseInt(this.value);
+            if (count > 10) {
+                count = 10;
+                this.value = count;
+            }
+            const tableId = "add_courses";
+            removeCourseRow(tableId, count);
+            addCourseRow(tableId, count);
+        });
+
+        document.getElementById("drop_amount").addEventListener("input", function () {
+            let count = parseInt(this.value);
+            if (count > 10) {
+                count = 10;
+                this.value = count;
+            }
+            const tableId = "drop_courses";
+            removeCourseRow(tableId, count);
+            addCourseRow(tableId, count);
+        });
+
+        document.getElementById("show_tables").addEventListener("click", function () {
+            const addAmount = parseInt(document.getElementById("add_amount").value);
+            const dropAmount = parseInt(document.getElementById("drop_amount").value);
+            addCourseRow("add_courses", addAmount);
+            addCourseRow("drop_courses", dropAmount);
+            this.style.display = "none";
+        });
+    document.querySelector("form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const formData = {
+            date: document.getElementById("date").value,
+            prefix: document.getElementById("prefix").value,
+            studentID: document.getElementById("SID").value,
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            year: document.getElementById("Year").value,
+            field: document.getElementById("field").value,
+            addressNumber: document.getElementById("addressNumber").value,
+            moo: document.getElementById("moo").value,
+            tambol: document.getElementById("tambol").value,
+            amphoe: document.getElementById("amphoe").value,
+            province: document.getElementById("province").value,
+            postcode: document.getElementById("postcode").value,
+            phone: document.getElementById("phone").value,
+            telephone: document.getElementById("telephone").value,
+            advisor: document.getElementById("advisor").value,
+            cause: document.getElementById("cause").value,
+            addSubjects: getSubjectsFromTable("add_courses"),
+            dropSubjects: getSubjectsFromTable("drop_courses")
+        };
+
+        async function sendData() {
+            const response = await fetch("http://localhost:8080/api/requests", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                alert("ส่งข้อมูลสำเร็จ!");
+                window.location.reload();
+            } else {
+                alert("เกิดข้อผิดพลาด!");
+            }
+        }
+
+        function getSubjectsFromTable(tableId) {
+            const table = document.getElementById(tableId);
+            let subjects = [];
+            for (let row of table.rows) {
+                let subject = {
+                    subjectCode: row.cells[0].querySelector("input").value,
+                    subjectName: row.cells[1].querySelector("input").value,
+                    subjectSection: row.cells[2].querySelector("input").value,
+                    subjectSchedule: row.cells[3].querySelector("input").value,
+                    subjectCredits: row.cells[4].querySelector("input").value,
+                    subjectInstructor: row.cells[5].querySelector("input").value,
+                };
+                subjects.push(subject);
+            }
+            return subjects;
+        }
+
+        sendData();
+    });
+</script>
+</body>
+</html>
